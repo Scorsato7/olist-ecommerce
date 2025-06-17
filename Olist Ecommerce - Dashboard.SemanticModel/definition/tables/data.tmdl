@@ -1,0 +1,102 @@
+table data
+	isHidden
+	lineageTag: 53b15081-db1d-4a2d-92a1-e1f5f86a9a2a
+
+	column Name
+		dataType: string
+		isHidden
+		lineageTag: 0c5cfc06-8319-4585-be5e-1fb4349b852c
+		summarizeBy: none
+		sourceColumn: Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Extension
+		dataType: string
+		isHidden
+		lineageTag: 95ddcd74-e7aa-4c9e-9eac-8d7eb5d73996
+		summarizeBy: none
+		sourceColumn: Extension
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date accessed'
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 9c75074d-2a77-4be2-aacc-3edcf9c70955
+		summarizeBy: none
+		sourceColumn: Date accessed
+
+		variation Variation
+			isDefault
+			relationship: da7ef620-99ff-46d6-a161-97aaa0dce9af
+			defaultHierarchy: LocalDateTable_96724877-f01d-47ff-9de6-836e28f8b28c.'Hierarquia de datas'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date modified'
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 405e4456-296d-4200-87ad-478c7156d9d2
+		summarizeBy: none
+		sourceColumn: Date modified
+
+		variation Variation
+			isDefault
+			relationship: 96d67495-56dc-4517-b366-18c462cd4a97
+			defaultHierarchy: LocalDateTable_c19c5c4b-f30f-41b5-af3a-dd3465a7e2ce.'Hierarquia de datas'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date created'
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: ce55df13-96eb-497b-be19-ae33fc34a581
+		summarizeBy: none
+		sourceColumn: Date created
+
+		variation Variation
+			isDefault
+			relationship: 07305ceb-93eb-42cf-bad9-5b7e9baba0bd
+			defaultHierarchy: LocalDateTable_11da37c9-1cd5-4c0b-b852-773c0111a43c.'Hierarquia de datas'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Folder Path'
+		dataType: string
+		isHidden
+		lineageTag: a3576281-fa73-448b-ad71-cc54b6e1fd14
+		summarizeBy: none
+		sourceColumn: Folder Path
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition data = m
+		mode: import
+		source =
+				let
+				    Fonte = Folder.Files("C:\Users\Thiago\Projetos\olist-ecommerce\data")
+				in
+				    Fonte
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

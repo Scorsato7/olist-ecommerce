@@ -1,0 +1,64 @@
+table Logradouro
+	lineageTag: 629feb72-63aa-43c7-9f40-83379d62bcc5
+
+	column geolocation_zip_code_prefix
+		dataType: int64
+		formatString: 0
+		lineageTag: 003da160-8550-43fa-b8b4-9951467e4740
+		summarizeBy: sum
+		sourceColumn: geolocation_zip_code_prefix
+
+		annotation SummarizationSetBy = Automatic
+
+	column geolocation_lat
+		dataType: int64
+		formatString: 0
+		lineageTag: 3d0edc75-256f-4e7b-a1c2-5cacd9f10150
+		summarizeBy: sum
+		sourceColumn: geolocation_lat
+
+		annotation SummarizationSetBy = Automatic
+
+	column geolocation_lng
+		dataType: int64
+		formatString: 0
+		lineageTag: 0416d23f-df15-45d8-ae80-6e0b31d172e4
+		summarizeBy: sum
+		sourceColumn: geolocation_lng
+
+		annotation SummarizationSetBy = Automatic
+
+	column geolocation_city
+		dataType: string
+		lineageTag: 041fdca6-a33c-4f50-8d4e-498f1d02e926
+		summarizeBy: none
+		sourceColumn: geolocation_city
+
+		annotation SummarizationSetBy = Automatic
+
+	column geolocation_state
+		dataType: string
+		lineageTag: c67c9ba5-05fb-4800-b0b6-a3082cfaed70
+		summarizeBy: none
+		sourceColumn: geolocation_state
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Logradouro = m
+		mode: import
+		source =
+				let
+				    Fonte = data,
+				    #"Linhas Filtradas" = Table.SelectRows(Fonte, each ([Name] = "olist_geolocation_dataset.csv")),
+				    #"C:\Users\Thiago\Projetos\olist-ecommerce\data\_olist_geolocation_dataset csv" = #"Linhas Filtradas"{[#"Folder Path"="C:\Users\Thiago\Projetos\olist-ecommerce\data\",Name="olist_geolocation_dataset.csv"]}[Content],
+				    #"CSV Importado" = Csv.Document(#"C:\Users\Thiago\Projetos\olist-ecommerce\data\_olist_geolocation_dataset csv",[Delimiter=",", Columns=5, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(#"CSV Importado", [PromoteAllScalars=true]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos",{{"geolocation_zip_code_prefix", Int64.Type}, {"geolocation_lat", Int64.Type}, {"geolocation_lng", Int64.Type}, {"geolocation_city", type text}, {"geolocation_state", type text}}),
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(#"Tipo Alterado",{{"geolocation_city", Text.Proper, type text}})
+				in
+				    #"Colocar Cada Palavra Em Maiúscula"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

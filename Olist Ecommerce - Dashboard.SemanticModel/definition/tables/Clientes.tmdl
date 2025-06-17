@@ -1,0 +1,62 @@
+table Clientes
+	lineageTag: 40a38d5a-8738-4b8e-b84e-0cdd6bd191bf
+
+	column customer_id
+		dataType: string
+		lineageTag: ad728193-518f-41db-9b4a-47c9e197d052
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_unique_id
+		dataType: string
+		lineageTag: d9128b8b-b799-44a1-af27-65011a12ff95
+		summarizeBy: none
+		sourceColumn: customer_unique_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_zip_code_prefix
+		dataType: int64
+		formatString: 0
+		lineageTag: 1ff389f4-4911-45b2-af9c-2b7f7a322890
+		summarizeBy: none
+		sourceColumn: customer_zip_code_prefix
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_city
+		dataType: string
+		lineageTag: 4fa5417b-7e48-456f-85e7-eed55b9fcf33
+		summarizeBy: none
+		sourceColumn: customer_city
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_state
+		dataType: string
+		lineageTag: 39d3b980-7d1a-4fd2-ab9a-e9063536eef8
+		summarizeBy: none
+		sourceColumn: customer_state
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Clientes = m
+		mode: import
+		source =
+				let
+				    Fonte = data,
+				    #"Linhas Filtradas" = Table.SelectRows(Fonte, each ([Name] = "olist_customers_dataset.csv")),
+				    #"C:\Users\Thiago\Projetos\olist-ecommerce\data\_olist_customers_dataset csv" = #"Linhas Filtradas"{[#"Folder Path"="C:\Users\Thiago\Projetos\olist-ecommerce\data\",Name="olist_customers_dataset.csv"]}[Content],
+				    #"CSV Importado" = Csv.Document(#"C:\Users\Thiago\Projetos\olist-ecommerce\data\_olist_customers_dataset csv",[Delimiter=",", Columns=5, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(#"CSV Importado", [PromoteAllScalars=true]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos",{{"customer_id", type text}, {"customer_unique_id", type text}, {"customer_zip_code_prefix", Int64.Type}, {"customer_city", type text}, {"customer_state", type text}}),
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(#"Tipo Alterado",{{"customer_city", Text.Proper, type text}})
+				in
+				    #"Colocar Cada Palavra Em Maiúscula"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,79 @@
+relationship da7ef620-99ff-46d6-a161-97aaa0dce9af
+	joinOnDateBehavior: datePartOnly
+	fromColumn: data.'Date accessed'
+	toColumn: LocalDateTable_96724877-f01d-47ff-9de6-836e28f8b28c.Date
+
+relationship 96d67495-56dc-4517-b366-18c462cd4a97
+	joinOnDateBehavior: datePartOnly
+	fromColumn: data.'Date modified'
+	toColumn: LocalDateTable_c19c5c4b-f30f-41b5-af3a-dd3465a7e2ce.Date
+
+relationship 07305ceb-93eb-42cf-bad9-5b7e9baba0bd
+	joinOnDateBehavior: datePartOnly
+	fromColumn: data.'Date created'
+	toColumn: LocalDateTable_11da37c9-1cd5-4c0b-b852-773c0111a43c.Date
+
+relationship 35e7d689-e4a2-489b-bd35-77586af38956
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Pedidos.order_purchase_timestamp
+	toColumn: LocalDateTable_30726a0a-c817-41f8-8e6b-366ed7b5c10e.Date
+
+relationship f5d3d61e-1204-4c62-a3ca-4b8b5282fba2
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Pedidos.order_approved_at
+	toColumn: LocalDateTable_95c6b416-ced4-4ad4-aba5-7231a699b0e1.Date
+
+relationship be64f272-40d4-4350-a803-b4f67c50bb53
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Pedidos.order_delivered_carrier_date
+	toColumn: LocalDateTable_c3174e41-e292-49a3-ba0f-fb338eb5e32e.Date
+
+relationship 0ecba402-3fb1-4aff-b5e1-959acb865910
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Pedidos.order_delivered_customer_date
+	toColumn: LocalDateTable_66052cc4-d8dd-4a25-bef7-bbbb89cfaf6e.Date
+
+relationship f08803da-e86f-4dad-aef5-f91f1686014d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Pedidos.order_estimated_delivery_date
+	toColumn: LocalDateTable_a4cc7e87-94d6-4ed4-b251-3f01cda41dbc.Date
+
+relationship 91bbcc20-9d9e-45a5-a5ad-601f36ef5a13
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Reviews.review_creation_date
+	toColumn: LocalDateTable_cfb71588-a596-4e24-b600-1e123b3ed37d.Date
+
+relationship fe5a70d6-879b-478e-b4ff-e07183e2c9bc
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Reviews.review_answer_timestamp
+	toColumn: LocalDateTable_87ecb264-ed3b-4a97-8af5-46fe692884ec.Date
+
+relationship 64a71f41-5c2d-3e6b-33d9-757de89dbda1
+	crossFilteringBehavior: bothDirections
+	fromColumn: Pedidos.customer_id
+	toColumn: Clientes.customer_id
+
+relationship 5e9463b2-d6ab-990f-3605-cc44b71d03e9
+	fromColumn: Reviews.order_id
+	toColumn: Pedidos.order_id
+
+relationship 6b4ee4a9-f3bf-007e-9556-e2d839b226bc
+	fromColumn: Pagamentos.order_id
+	toColumn: Pedidos.order_id
+
+relationship 2e4b5c8f-397e-1ca3-bb6b-081c954a87ee
+	fromColumn: ItensPedidos.order_id
+	toColumn: Pedidos.order_id
+
+relationship ded3db3d-34ff-41b8-8ae0-d7b758163fb0
+	fromColumn: ItensPedidos.product_id
+	toColumn: Produtos.product_id
+
+relationship 8513e9ba-d186-2417-5052-0a47d5959b5d
+	fromColumn: ItensPedidos.seller_id
+	toColumn: Vendedores.seller_id
+
+relationship 0e4cc567-50ee-2099-e9e6-9a684e2cecc3
+	fromColumn: Produtos.product_category_name
+	toColumn: CategoriasTraduzidas.product_category_name_english
+

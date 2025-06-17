@@ -1,0 +1,61 @@
+table Pagamentos
+	lineageTag: 22399d49-ac0c-45b7-a87b-921307c626bb
+
+	column order_id
+		dataType: string
+		lineageTag: 9e2e4cc3-8943-404e-871d-4f3e713fe7ef
+		summarizeBy: none
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_sequential
+		dataType: string
+		lineageTag: 68096cf2-42ed-494a-b0cd-50ed0c0206f8
+		summarizeBy: none
+		sourceColumn: payment_sequential
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_type
+		dataType: string
+		lineageTag: b8a9f186-4654-48c8-a2bb-ee6cd63dfcd4
+		summarizeBy: none
+		sourceColumn: payment_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_installments
+		dataType: string
+		lineageTag: 7caeb92c-4508-49f5-b943-bf0ed5a7dc76
+		summarizeBy: none
+		sourceColumn: payment_installments
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_value
+		dataType: decimal
+		formatString: 0
+		lineageTag: 50438add-d44a-41f7-a63a-d11d145b23f5
+		summarizeBy: sum
+		sourceColumn: payment_value
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Pagamentos = m
+		mode: import
+		source =
+				let
+				    Fonte = data,
+				    #"Linhas Filtradas" = Table.SelectRows(Fonte, each ([Name] = "olist_order_payments_dataset.csv")),
+				    #"C:\Users\Thiago\Projetos\olist-ecommerce\data\_olist_order_payments_dataset csv" = #"Linhas Filtradas"{[#"Folder Path"="C:\Users\Thiago\Projetos\olist-ecommerce\data\",Name="olist_order_payments_dataset.csv"]}[Content],
+				    #"CSV Importado" = Csv.Document(#"C:\Users\Thiago\Projetos\olist-ecommerce\data\_olist_order_payments_dataset csv",[Delimiter=",", Columns=5, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(#"CSV Importado", [PromoteAllScalars=true]),
+				    #"Tipo Alterado com Localidade" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos", {{"payment_value", Currency.Type}}, "en-US")
+				in
+				    #"Tipo Alterado com Localidade"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

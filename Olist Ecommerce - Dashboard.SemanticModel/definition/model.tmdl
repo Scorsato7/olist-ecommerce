@@ -1,0 +1,40 @@
+model Model
+	culture: pt-BR
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: pt-BR
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["data","Clientes","Logradouro","Pedidos","ItensPedidos","Pagamentos","Reviews","Produtos","Vendedores","CategoriasTraduzidas"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBIDesktopVersion = 2.144.679.0 (25.06)+ef40146207b86a826d1c72a7727a743ee37450e9
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table data
+ref table DateTableTemplate_18d69b45-5592-4eec-b363-b18ad35145a8
+ref table LocalDateTable_96724877-f01d-47ff-9de6-836e28f8b28c
+ref table LocalDateTable_c19c5c4b-f30f-41b5-af3a-dd3465a7e2ce
+ref table LocalDateTable_11da37c9-1cd5-4c0b-b852-773c0111a43c
+ref table Clientes
+ref table Logradouro
+ref table Pedidos
+ref table LocalDateTable_30726a0a-c817-41f8-8e6b-366ed7b5c10e
+ref table LocalDateTable_95c6b416-ced4-4ad4-aba5-7231a699b0e1
+ref table LocalDateTable_c3174e41-e292-49a3-ba0f-fb338eb5e32e
+ref table LocalDateTable_66052cc4-d8dd-4a25-bef7-bbbb89cfaf6e
+ref table LocalDateTable_a4cc7e87-94d6-4ed4-b251-3f01cda41dbc
+ref table ItensPedidos
+ref table Pagamentos
+ref table Reviews
+ref table LocalDateTable_cfb71588-a596-4e24-b600-1e123b3ed37d
+ref table LocalDateTable_87ecb264-ed3b-4a97-8af5-46fe692884ec
+ref table Produtos
+ref table Vendedores
+ref table CategoriasTraduzidas
+
+ref cultureInfo pt-BR
+

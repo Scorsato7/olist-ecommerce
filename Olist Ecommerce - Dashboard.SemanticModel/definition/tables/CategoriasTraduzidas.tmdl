@@ -1,0 +1,37 @@
+table CategoriasTraduzidas
+	lineageTag: 162815e7-0464-4a3d-9d8f-bf7338c86409
+
+	column product_category_name
+		dataType: string
+		lineageTag: 4bee8018-c5c9-4e86-81bf-2e6a1e4d269e
+		summarizeBy: none
+		sourceColumn: product_category_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_category_name_english
+		dataType: string
+		lineageTag: e3f462a3-d680-4b57-9342-5f95afc5811d
+		summarizeBy: none
+		sourceColumn: product_category_name_english
+
+		annotation SummarizationSetBy = Automatic
+
+	partition CategoriasTraduzidas = m
+		mode: import
+		source =
+				let
+				    Fonte = data,
+				    #"Linhas Filtradas" = Table.SelectRows(Fonte, each ([Name] = "product_category_name_translation.csv")),
+				    #"C:\Users\Thiago\Projetos\olist-ecommerce\data\_product_category_name_translation csv" = #"Linhas Filtradas"{[#"Folder Path"="C:\Users\Thiago\Projetos\olist-ecommerce\data\",Name="product_category_name_translation.csv"]}[Content],
+				    #"CSV Importado" = Csv.Document(#"C:\Users\Thiago\Projetos\olist-ecommerce\data\_product_category_name_translation csv",[Delimiter=",", Columns=2, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"CSV Importado",{{"Column1", type text}, {"Column2", type text}}),
+				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(#"Tipo Alterado", [PromoteAllScalars=true]),
+				    #"Tipo Alterado1" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos",{{"product_category_name", type text}, {"product_category_name_english", type text}})
+				in
+				    #"Tipo Alterado1"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

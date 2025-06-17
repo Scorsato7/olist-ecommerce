@@ -1,0 +1,79 @@
+table ItensPedidos
+	lineageTag: cb5d2cee-590e-4efd-8129-c4f8d705bc7e
+
+	column order_id
+		dataType: string
+		lineageTag: 822f4880-8f3d-4232-b81c-4b533d2f7558
+		summarizeBy: none
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_item_id
+		dataType: string
+		lineageTag: 2520cc5b-e410-4fba-8edb-a21e64d7ce56
+		summarizeBy: none
+		sourceColumn: order_item_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_id
+		dataType: string
+		lineageTag: e1475a1a-1016-4735-a4f3-5fb2fe5fd681
+		summarizeBy: none
+		sourceColumn: product_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column seller_id
+		dataType: string
+		lineageTag: b7aa4087-a2f3-4e73-a8e2-6b4fe56f9ab8
+		summarizeBy: none
+		sourceColumn: seller_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column shipping_limit_date
+		dataType: string
+		lineageTag: 2a1a2201-b607-4796-bf36-ed90ff6ad92e
+		summarizeBy: none
+		sourceColumn: shipping_limit_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column price
+		dataType: decimal
+		formatString: 0
+		lineageTag: 3f6171b3-6bf7-48aa-9959-1c614384a8cb
+		summarizeBy: sum
+		sourceColumn: price
+
+		annotation SummarizationSetBy = Automatic
+
+	column freight_value
+		dataType: decimal
+		formatString: 0
+		lineageTag: d43b3475-fb22-44b6-9850-389cfe344f06
+		summarizeBy: sum
+		sourceColumn: freight_value
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ItensPedidos = m
+		mode: import
+		source =
+				let
+				    Fonte = data,
+				    #"Linhas Filtradas" = Table.SelectRows(Fonte, each ([Name] = "olist_order_items_dataset.csv")),
+				    #"C:\Users\Thiago\Projetos\olist-ecommerce\data\_olist_order_items_dataset csv" = #"Linhas Filtradas"{[#"Folder Path"="C:\Users\Thiago\Projetos\olist-ecommerce\data\",Name="olist_order_items_dataset.csv"]}[Content],
+				    #"CSV Importado" = Csv.Document(#"C:\Users\Thiago\Projetos\olist-ecommerce\data\_olist_order_items_dataset csv",[Delimiter=",", Columns=7, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(#"CSV Importado", [PromoteAllScalars=true]),
+				    #"Tipo Alterado com Localidade" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos", {{"price", Currency.Type}}, "en-US"),
+				    #"Tipo Alterado com Localidade1" = Table.TransformColumnTypes(#"Tipo Alterado com Localidade", {{"freight_value", Currency.Type}}, "en-US")
+				in
+				    #"Tipo Alterado com Localidade1"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+
