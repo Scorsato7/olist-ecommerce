@@ -105,9 +105,17 @@ table Pedidos
 				    #"CSV Importado" = Csv.Document(#"C:\Users\Thiago\Projetos\olist-ecommerce\data\_olist_orders_dataset csv",[Delimiter=",", Columns=8, Encoding=1252, QuoteStyle=QuoteStyle.None]),
 				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(#"CSV Importado", [PromoteAllScalars=true]),
 				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos",{{"order_id", type text}, {"customer_id", type text}, {"order_status", type text}, {"order_purchase_timestamp", type datetime}, {"order_approved_at", type datetime}, {"order_delivered_carrier_date", type datetime}, {"order_delivered_customer_date", type datetime}, {"order_estimated_delivery_date", type datetime}}),
-				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(#"Tipo Alterado",{{"order_status", Text.Proper, type text}})
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(#"Tipo Alterado",{{"order_status", Text.Proper, type text}}),
+				    #"Valor Substituído" = Table.ReplaceValue(#"Colocar Cada Palavra Em Maiúscula","Approved","Aprovado",Replacer.ReplaceText,{"order_status"}),
+				    #"Valor Substituído1" = Table.ReplaceValue(#"Valor Substituído","Canceled","Cancelado",Replacer.ReplaceText,{"order_status"}),
+				    #"Valor Substituído2" = Table.ReplaceValue(#"Valor Substituído1","Created","Criado",Replacer.ReplaceText,{"order_status"}),
+				    #"Valor Substituído3" = Table.ReplaceValue(#"Valor Substituído2","Delivered","Entregue",Replacer.ReplaceText,{"order_status"}),
+				    #"Valor Substituído4" = Table.ReplaceValue(#"Valor Substituído3","Invoiced","Faturado",Replacer.ReplaceText,{"order_status"}),
+				    #"Valor Substituído5" = Table.ReplaceValue(#"Valor Substituído4","Processing","Processando",Replacer.ReplaceText,{"order_status"}),
+				    #"Valor Substituído6" = Table.ReplaceValue(#"Valor Substituído5","Shipped","Enviado",Replacer.ReplaceText,{"order_status"}),
+				    #"Valor Substituído7" = Table.ReplaceValue(#"Valor Substituído6","Unavailable","Indisponível",Replacer.ReplaceText,{"order_status"})
 				in
-				    #"Colocar Cada Palavra Em Maiúscula"
+				    #"Valor Substituído7"
 
 	annotation PBI_NavigationStepName = Navegação
 

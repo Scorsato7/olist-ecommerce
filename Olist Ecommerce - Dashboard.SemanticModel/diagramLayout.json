@@ -4,7 +4,7 @@
     {
       "ordinal": 0,
       "scrollPosition": {
-        "x": 0,
+        "x": 1281.7425364527694,
         "y": 0
       },
       "nodes": [
@@ -146,6 +146,19 @@
           },
           "zIndex": 9,
           "expandedHeight": 176
+        },
+        {
+          "location": {
+            "x": 2364.7425364527694,
+            "y": 289.164065777566
+          },
+          "nodeIndex": "Medidas",
+          "nodeLineageTag": "1570be87-50e5-4e65-875e-5243fadf2a1e",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
         }
       ],
       "name": "Todas as tabelas",
