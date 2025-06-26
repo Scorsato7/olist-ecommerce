@@ -4,7 +4,7 @@
     {
       "ordinal": 0,
       "scrollPosition": {
-        "x": 1281.7425364527694,
+        "x": 260,
         "y": 0
       },
       "nodes": [
@@ -16,11 +16,10 @@
           "nodeIndex": "CategoriasTraduzidas",
           "nodeLineageTag": "162815e7-0464-4a3d-9d8f-bf7338c86409",
           "size": {
-            "height": 72,
+            "height": 128,
             "width": 234
           },
-          "zIndex": 1,
-          "expandedHeight": 128
+          "zIndex": 1
         },
         {
           "location": {
@@ -113,11 +112,10 @@
           "nodeIndex": "Produtos",
           "nodeLineageTag": "072c423e-b0c2-44e2-8280-62b5138f4f34",
           "size": {
-            "height": 104,
+            "height": 296,
             "width": 234
           },
-          "zIndex": 8,
-          "expandedHeight": 296
+          "zIndex": 8
         },
         {
           "location": {

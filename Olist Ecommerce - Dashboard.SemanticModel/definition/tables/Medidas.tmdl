@@ -5,6 +5,10 @@ table Medidas
 		formatString: 0
 		lineageTag: 66fa7e90-bc0a-4ff8-b597-9db0fe049137
 
+	measure TotalPedidos = COUNT(Pedidos[order_id])
+		formatString: 0
+		lineageTag: e73bb197-6cb3-4cba-b764-b6b20b415876
+
 	partition Medidas = m
 		mode: import
 		source =

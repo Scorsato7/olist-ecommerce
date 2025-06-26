@@ -37,8 +37,15 @@ table Clientes
 	column customer_state
 		dataType: string
 		lineageTag: 39d3b980-7d1a-4fd2-ab9a-e9063536eef8
+		dataCategory: StateOrProvince
 		summarizeBy: none
 		sourceColumn: customer_state
+
+		annotation SummarizationSetBy = Automatic
+
+	column PaisUF = Clientes[customer_state]&" - Brasil"
+		lineageTag: 68a970d8-eb96-41ed-9ac9-78fbce34de1c
+		summarizeBy: none
 
 		annotation SummarizationSetBy = Automatic
 
