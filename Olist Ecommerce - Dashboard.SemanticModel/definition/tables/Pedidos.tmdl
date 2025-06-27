@@ -27,7 +27,7 @@ table Pedidos
 
 	column order_purchase_timestamp
 		dataType: dateTime
-		formatString: General Date
+		formatString: Long Date
 		lineageTag: 357b13c2-3a5a-46ec-833d-49d62cc7e405
 		summarizeBy: none
 		sourceColumn: order_purchase_timestamp
@@ -95,6 +95,14 @@ table Pedidos
 
 		annotation SummarizationSetBy = Automatic
 
+	column order_purchase_year
+		dataType: string
+		lineageTag: 4516f6e2-be0e-4034-b8ae-eb183e1d141e
+		summarizeBy: none
+		sourceColumn: order_purchase_year
+
+		annotation SummarizationSetBy = Automatic
+
 	partition Pedidos = m
 		mode: import
 		source =
@@ -113,9 +121,11 @@ table Pedidos
 				    #"Valor Substituído4" = Table.ReplaceValue(#"Valor Substituído3","Invoiced","Faturado",Replacer.ReplaceText,{"order_status"}),
 				    #"Valor Substituído5" = Table.ReplaceValue(#"Valor Substituído4","Processing","Processando",Replacer.ReplaceText,{"order_status"}),
 				    #"Valor Substituído6" = Table.ReplaceValue(#"Valor Substituído5","Shipped","Enviado",Replacer.ReplaceText,{"order_status"}),
-				    #"Valor Substituído7" = Table.ReplaceValue(#"Valor Substituído6","Unavailable","Indisponível",Replacer.ReplaceText,{"order_status"})
+				    #"Valor Substituído7" = Table.ReplaceValue(#"Valor Substituído6","Unavailable","Indisponível",Replacer.ReplaceText,{"order_status"}),
+				    #"Personalização Adicionada" = Table.AddColumn(#"Valor Substituído7", "Personalizar", each Date.Year([order_purchase_timestamp])),
+				    #"Colunas Renomeadas" = Table.RenameColumns(#"Personalização Adicionada",{{"Personalizar", "order_purchase_year"}})
 				in
-				    #"Valor Substituído7"
+				    #"Colunas Renomeadas"
 
 	annotation PBI_NavigationStepName = Navegação
 

@@ -49,6 +49,14 @@ table Clientes
 
 		annotation SummarizationSetBy = Automatic
 
+	column costumer_region
+		dataType: string
+		lineageTag: 5545dcdf-f76c-497d-ac7b-c3cb0b81ab73
+		summarizeBy: none
+		sourceColumn: costumer_region
+
+		annotation SummarizationSetBy = Automatic
+
 	partition Clientes = m
 		mode: import
 		source =
@@ -59,9 +67,10 @@ table Clientes
 				    #"CSV Importado" = Csv.Document(#"C:\Users\Thiago\Projetos\olist-ecommerce\data\_olist_customers_dataset csv",[Delimiter=",", Columns=5, Encoding=1252, QuoteStyle=QuoteStyle.None]),
 				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(#"CSV Importado", [PromoteAllScalars=true]),
 				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos",{{"customer_id", type text}, {"customer_unique_id", type text}, {"customer_zip_code_prefix", Int64.Type}, {"customer_city", type text}, {"customer_state", type text}}),
-				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(#"Tipo Alterado",{{"customer_city", Text.Proper, type text}})
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(#"Tipo Alterado",{{"customer_city", Text.Proper, type text}}),
+				    #"Coluna Condicional Adicionada" = Table.AddColumn(#"Colocar Cada Palavra Em Maiúscula", "costumer_region", each if [customer_state] = "SC" then "Sul" else if [customer_state] = "RS" then "Sul" else if [customer_state] = "PR" then "Sul" else if [customer_state] = "SP" then "Sudeste" else if [customer_state] = "RJ" then "Sudeste" else if [customer_state] = "MG" then "Sudeste" else if [customer_state] = "ES" then "Sudeste" else if [customer_state] = "MT" then "Centro-Oeste" else if [customer_state] = "MS" then "Centro-Oeste" else if [customer_state] = "GO" then "Centro-Oeste" else if [customer_state] = "DF" then "Centro-Oeste" else if [customer_state] = "MA" then "Nordeste" else if [customer_state] = "PI" then "Nordeste" else if [customer_state] = "CE" then "Nordeste" else if [customer_state] = "RN" then "Nordeste" else if [customer_state] = "PE" then "Nordeste" else if [customer_state] = "PB" then "Nordeste" else if [customer_state] = "SE" then "Nordeste" else if [customer_state] = "AL" then "Nordeste" else if [customer_state] = "BA" then "Nordeste" else if [customer_state] = "AM" then "Norte" else if [customer_state] = "RR" then "Norte" else if [customer_state] = "AP" then "Norte" else if [customer_state] = "PA" then "Norte" else if [customer_state] = "TO" then "Norte" else if [customer_state] = "RO" then "Norte" else if [customer_state] = "AC" then "Norte" else null)
 				in
-				    #"Colocar Cada Palavra Em Maiúscula"
+				    #"Coluna Condicional Adicionada"
 
 	annotation PBI_NavigationStepName = Navegação
 
