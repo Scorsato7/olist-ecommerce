@@ -16,6 +16,11 @@ table Medidas
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
+	measure 'Media Entrega' = CALCULATE(AVERAGE(Pedidos[order_delivered_by_days]), NOT ISBLANK(Pedidos[order_delivered_customer_date]))
+		lineageTag: 540be11e-b11e-40e6-97ab-825cffe572ac
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
 	partition Medidas = m
 		mode: import
 		source =

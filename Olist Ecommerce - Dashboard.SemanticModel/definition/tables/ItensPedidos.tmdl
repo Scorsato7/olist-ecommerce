@@ -59,6 +59,12 @@ table ItensPedidos
 
 		annotation SummarizationSetBy = Automatic
 
+	column freight_category = SWITCH(TRUE(), ItensPedidos[freight_value] < 10, "Até R$10", ItensPedidos[freight_value] < 20, "R$10-20", ItensPedidos[freight_value] < 30, "R$20-30", "Acima de R$30")
+		lineageTag: fc62080a-191a-469d-836d-ee63988d50ce
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
 	partition ItensPedidos = m
 		mode: import
 		source =

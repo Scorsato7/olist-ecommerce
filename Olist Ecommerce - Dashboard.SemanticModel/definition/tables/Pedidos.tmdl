@@ -110,6 +110,13 @@ table Pedidos
 
 		annotation SummarizationSetBy = Automatic
 
+	column order_delivered_by_days = DATEDIFF(Pedidos[order_approved_at], Pedidos[order_delivered_customer_date], DAY)
+		formatString: 0
+		lineageTag: 6ac73461-9602-4a77-bc33-e083e860db03
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
 	partition Pedidos = m
 		mode: import
 		source =
