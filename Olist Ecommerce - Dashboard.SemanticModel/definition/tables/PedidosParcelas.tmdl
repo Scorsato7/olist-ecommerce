@@ -1,0 +1,26 @@
+table PedidosParcelas
+	lineageTag: 34ab967d-633f-4fbc-b110-8dd067723dec
+
+	column order_id
+		lineageTag: 5df30989-c470-43ca-aff0-ddbd000b6784
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Pagamentos[order_id]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Parcelas
+		formatString: 0
+		lineageTag: c5eafa77-e12a-46d4-a93e-833c61c27256
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Parcelas]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition PedidosParcelas = calculated
+		mode: import
+		source = SUMMARIZE(Pagamentos, Pagamentos[order_id], "Parcelas", MAX(Pagamentos[payment_installments]))
+
+	annotation PBI_Id = 047cfcc889a947c48a2491913df7456f
+

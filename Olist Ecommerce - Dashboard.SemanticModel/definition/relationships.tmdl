@@ -77,3 +77,9 @@ relationship 0e4cc567-50ee-2099-e9e6-9a684e2cecc3
 	fromColumn: Produtos.product_category_name
 	toColumn: CategoriasTraduzidas.product_category_name_english
 
+relationship 649c7a71-14c6-4ffe-0e4e-f6aaa688d64d
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: PedidosParcelas.order_id
+	toColumn: Pedidos.order_id
+

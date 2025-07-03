@@ -10,9 +10,10 @@ table Pagamentos
 		annotation SummarizationSetBy = Automatic
 
 	column payment_sequential
-		dataType: string
+		dataType: int64
+		formatString: 0
 		lineageTag: 68096cf2-42ed-494a-b0cd-50ed0c0206f8
-		summarizeBy: none
+		summarizeBy: sum
 		sourceColumn: payment_sequential
 
 		annotation SummarizationSetBy = Automatic
@@ -26,9 +27,10 @@ table Pagamentos
 		annotation SummarizationSetBy = Automatic
 
 	column payment_installments
-		dataType: string
+		dataType: int64
+		formatString: 0
 		lineageTag: 7caeb92c-4508-49f5-b943-bf0ed5a7dc76
-		summarizeBy: none
+		summarizeBy: sum
 		sourceColumn: payment_installments
 
 		annotation SummarizationSetBy = Automatic
@@ -51,9 +53,16 @@ table Pagamentos
 				    #"C:\Users\Thiago\Projetos\olist-ecommerce\data\_olist_order_payments_dataset csv" = #"Linhas Filtradas"{[#"Folder Path"="C:\Users\Thiago\Projetos\olist-ecommerce\data\",Name="olist_order_payments_dataset.csv"]}[Content],
 				    #"CSV Importado" = Csv.Document(#"C:\Users\Thiago\Projetos\olist-ecommerce\data\_olist_order_payments_dataset csv",[Delimiter=",", Columns=5, Encoding=1252, QuoteStyle=QuoteStyle.None]),
 				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(#"CSV Importado", [PromoteAllScalars=true]),
-				    #"Tipo Alterado com Localidade" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos", {{"payment_value", Currency.Type}}, "en-US")
+				    #"Tipo Alterado com Localidade" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos", {{"payment_value", Currency.Type}}, "en-US"),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Tipo Alterado com Localidade",{{"payment_installments", Int64.Type}, {"payment_sequential", Int64.Type}}),
+				    #"Valor Substituído" = Table.ReplaceValue(#"Tipo Alterado","_"," ",Replacer.ReplaceText,{"payment_type"}),
+				    #"Linhas Filtradas1" = Table.SelectRows(#"Valor Substituído", each true),
+				    #"Valor Substituído1" = Table.ReplaceValue(#"Linhas Filtradas1","credit card","Cartão de Crédito",Replacer.ReplaceText,{"payment_type"}),
+				    #"Valor Substituído2" = Table.ReplaceValue(#"Valor Substituído1","debit card","Cartão de Débito",Replacer.ReplaceText,{"payment_type"}),
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(#"Valor Substituído2",{{"payment_type", Text.Proper, type text}}),
+				    #"Linhas Filtradas2" = Table.SelectRows(#"Colocar Cada Palavra Em Maiúscula", each ([payment_type] <> "Not Defined"))
 				in
-				    #"Tipo Alterado com Localidade"
+				    #"Linhas Filtradas2"
 
 	annotation PBI_NavigationStepName = Navegação
 

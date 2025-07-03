@@ -21,6 +21,16 @@ table Medidas
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
+	measure 'Pedidos por Parcela' = COUNTROWS(PedidosParcelas)
+		formatString: 0
+		lineageTag: aed09090-1dcf-4d84-83f9-ff27164f1844
+
+	measure 'Ticket Medio por Parcela' = AVERAGEX(PedidosParcelas, CALCULATE(SUM(Pagamentos[payment_value])))
+		formatString: "R$"\ #,0.###############;-"R$"\ #,0.###############;"R$"\ #,0.###############
+		lineageTag: 57d89cef-5eb5-4784-a97a-c8437fef6ac0
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
 	partition Medidas = m
 		mode: import
 		source =

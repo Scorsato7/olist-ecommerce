@@ -36,6 +36,7 @@ ref table Produtos
 ref table Vendedores
 ref table CategoriasTraduzidas
 ref table Medidas
+ref table PedidosParcelas
 
 ref cultureInfo pt-BR
 
