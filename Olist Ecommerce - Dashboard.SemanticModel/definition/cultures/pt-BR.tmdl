@@ -1907,7 +1907,9 @@ cultureInfo pt-BR
 			            "Weight": 0.7
 			          }
 			        },
-			        {},
+			        {
+			          "": {}
+			        },
 			        {
 			          "customer location": {
 			            "Type": "Noun",
@@ -9639,7 +9641,9 @@ cultureInfo pt-BR
 			            "Weight": 0.99
 			          }
 			        },
-			        {},
+			        {
+			          "": {}
+			        },
 			        {
 			          "seller location": {
 			            "Type": "Noun",
